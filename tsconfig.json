@@ -23,6 +23,7 @@
     }
   },
   "include": [
+    "loaders.d.ts",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
