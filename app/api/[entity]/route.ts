@@ -18,23 +18,24 @@ const QUESTIONS = Papa.parse<IQuestion>(questionsCSV,
     .data
 
 
+const DIFFICULTY_NAMES = ["easy", "medium", "hard"]
 const RESPONSES: Record<string, any> = {
     questions: QUESTIONS,
     difficulties: Array.from(
         new Set(
             QUESTIONS.map(question => question.difficulty)
         )
-    ),
+    ).map((value) => ({ value: DIFFICULTY_NAMES[value-1], id: value })),
     types: Array.from(
         new Set(
             QUESTIONS.map(question => question.type)
         )
-    ),
+    ).map((value, id) => ({ value, id })),
     companies: Array.from(
         new Set(
             QUESTIONS.map(question => question.company_asked)
         )
-    ),
+    ).map((value, id) => ({ value, id })),
 }
 
 interface IParams {
