@@ -1,6 +1,5 @@
 import type { NextConfig } from "next";
 
-console.log(`VERCEL_URL = https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`)
 const nextConfig: NextConfig = {
   turbopack: {
     rules: {
@@ -11,7 +10,10 @@ const nextConfig: NextConfig = {
     }
   },
   env: {
-    NEXT_PUBLIC_VERCEL_URL: process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : process.env.NEXT_PUBLIC_VERCEL_URL
+    NEXT_PUBLIC_VERCEL_URL: process.env.VERCEL_PROJECT_PRODUCTION_URL ?
+      `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      :
+      process.env.NEXT_PUBLIC_VERCEL_URL
   }
 };
 
