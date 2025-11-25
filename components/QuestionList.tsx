@@ -1,7 +1,7 @@
 import * as React from 'react';
 import QuestionItem from './QuestionItem';
 import IQuestion from '@/types/Question';
-import ISearch from '@/types/Search';
+import Sort from './Sort';
 
 interface IQuestionsProps {
   search: URLSearchParams
@@ -14,6 +14,7 @@ const QuestionList: React.FunctionComponent<IQuestionsProps> = async ({ search }
 
   return (
     <section>
+      <Sort search={search} />
       {questions.length ?
         <ul>
           {questions.map(question => <QuestionItem key={question.qid} {...question} />)}

@@ -39,6 +39,13 @@ const RESPONSES: Record<string, any[]> = {
     )
   ).map((value, id) => ({ value, id })),
 }
+
+const SORTERS: Record<string, (a: IQuestion, b: IQuestion) => number> = {
+  difficulty: (a, b) => a.difficulty - b.difficulty,
+  type: (a, b) => a.type.localeCompare(b.type),
+  company: (a, b) => a.company_asked.localeCompare(b.company_asked),
+}
+
 interface IParams {
   params: Promise<{
     entity: string
@@ -51,6 +58,7 @@ export async function GET(req: NextRequest, { params }: IParams) {
   let response = RESPONSES[entity]
 
   if (entity === 'questions') {
+    const sort = searchParams.get('sort')
     response = response.filter(entry =>
       !searchParams.getAll('difficulty').length ||
       searchParams.getAll('difficulty').includes(entry.difficulty.toString())
@@ -61,6 +69,7 @@ export async function GET(req: NextRequest, { params }: IParams) {
       !searchParams.getAll('company').length ||
       searchParams.getAll('company').includes(entry.company_asked)
     )
+    if (sort) response = response.sort(SORTERS[sort])
   }
 
   return Response.json(response)
