@@ -1,6 +1,7 @@
 import IQuestion from '@/types/Question'
 import questionsCSV from './q-trunc.csv'
 import Papa from 'papaparse'
+import { NextRequest } from 'next/server'
 
 const cutAtParenthesis = (header: string): string => {
   let parenthesis = header.indexOf("(")
@@ -19,7 +20,8 @@ const QUESTIONS = Papa.parse<IQuestion>(questionsCSV,
 
 
 const DIFFICULTY_NAMES = ["easy", "medium", "hard"]
-const RESPONSES: Record<string, any> = {
+
+const RESPONSES: Record<string, any[]> = {
   questions: QUESTIONS,
   difficulties: Array.from(
     new Set(
@@ -37,14 +39,29 @@ const RESPONSES: Record<string, any> = {
     )
   ).map((value, id) => ({ value, id })),
 }
-
 interface IParams {
   params: {
     entity: string
   }
 }
 
-export async function GET(req: Request, { params }: IParams) {
+export async function GET(req: NextRequest, { params }: IParams) {
+  const searchParams = req.nextUrl.searchParams
   const { entity } = await params
-  return Response.json(RESPONSES[entity])
+  let response = RESPONSES[entity]
+
+  if (entity === 'questions') {
+    response = response.filter(entry =>
+      !searchParams.getAll('difficulty').length ||
+      searchParams.getAll('difficulty').includes(entry.difficulty.toString())
+    ).filter(entry =>
+      !searchParams.getAll('type').length ||
+      searchParams.getAll('type').includes(entry.type)
+    ).filter(entry =>
+      !searchParams.getAll('company').length ||
+      searchParams.getAll('company').includes(entry.company_asked)
+    )
+  }
+
+  return Response.json(response)
 }
