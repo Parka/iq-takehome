@@ -40,9 +40,9 @@ const RESPONSES: Record<string, any[]> = {
   ).map((value, id) => ({ value, id })),
 }
 interface IParams {
-  params: {
+  params: Promise<{
     entity: string
-  }
+  }>
 }
 
 export async function GET(req: NextRequest, { params }: IParams) {
