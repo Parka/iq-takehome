@@ -9,7 +9,7 @@ interface IQuestionsProps {
 
 const QuestionList: React.FunctionComponent<IQuestionsProps> = async ({ search }) => {
   const searchParams = new URLSearchParams(search)
-  const data = await fetch(`${process.env.__NEXT_PRIVATE_ORIGIN}/api/questions?${searchParams}`)
+  const data = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/questions?${searchParams}`)
   const questions: IQuestion[] = await data.json()
 
   return (

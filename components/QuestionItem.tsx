@@ -9,11 +9,11 @@ interface IQuestionProps extends IQuestion {
 }
 
 const QuestionItem: React.FunctionComponent<IQuestionProps> = async (props) => {
-  const typesResponse = await fetch(`${process.env.__NEXT_PRIVATE_ORIGIN}/api/types`)
+  const typesResponse = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/types`)
   const types: IType[] = await typesResponse.json()
   const type = types.find(type => type.value === props.type)
 
-  const difficultiesResponse = await fetch(`${process.env.__NEXT_PRIVATE_ORIGIN}/api/difficulties`)
+  const difficultiesResponse = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/difficulties`)
   const difficulties: IDifficulty[] = await difficultiesResponse.json()
   const difficulty = difficulties.find(difficulty => difficulty.id === props.difficulty)
 

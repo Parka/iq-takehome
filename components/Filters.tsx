@@ -18,9 +18,9 @@ const Filters: React.FunctionComponent<IFiltersProps> = async ({ search }) => {
     typesResponse,
     companiesResponse
   ] = await Promise.all([
-    fetch(`${process.env.__NEXT_PRIVATE_ORIGIN}/api/difficulties`),
-    fetch(`${process.env.__NEXT_PRIVATE_ORIGIN}/api/types`),
-    fetch(`${process.env.__NEXT_PRIVATE_ORIGIN}/api/companies`)
+    fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/difficulties`),
+    fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/types`),
+    fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/companies`)
   ])
 
   const difficulties: IDifficulty[] = await difficultyResponse.json()
@@ -36,7 +36,7 @@ const Filters: React.FunctionComponent<IFiltersProps> = async ({ search }) => {
             difficulties.map(difficulty =>
               <li key={difficulty.id}>
                 <Link className={`
-                  ${DIFFICULTY_COLORS[(difficulty?.id || 1)-1]}
+                  ${DIFFICULTY_COLORS[(difficulty?.id || 1) - 1]}
                   outline-blue-700 dark:outline-blue-200
                   ${search?.getAll("difficulty").includes(difficulty.id.toString()) ? 'outline-2' : 'outline-0'}
                   px-3 rounded-full text-nowrap
