@@ -1,5 +1,6 @@
 
-import { PILL_COLORS } from '@/const/global';
+import { DIFFICULTY_COLORS, PILL_COLORS } from '@/const/global';
+import IDifficulty from '@/types/Difficulty';
 import IQuestion from '@/types/Question';
 import IType from '@/types/Type';
 import * as React from 'react';
@@ -8,9 +9,13 @@ interface IQuestionProps extends IQuestion {
 }
 
 const QuestionItem: React.FunctionComponent<IQuestionProps> = async (props) => {
-  const data = await fetch(`${process.env.__NEXT_PRIVATE_ORIGIN}/api/types`)
-  const types: IType[] = await data.json()
+  const typesResponse = await fetch(`${process.env.__NEXT_PRIVATE_ORIGIN}/api/types`)
+  const types: IType[] = await typesResponse.json()
   const type = types.find(type => type.value === props.type)
+
+  const difficultiesResponse = await fetch(`${process.env.__NEXT_PRIVATE_ORIGIN}/api/difficulties`)
+  const difficulties: IDifficulty[] = await difficultiesResponse.json()
+  const difficulty = difficulties.find(difficulty => difficulty.id === props.difficulty)
 
   return (
     <li className='grid grid-flow-col auto-cols-fr justify-center
@@ -23,7 +28,16 @@ const QuestionItem: React.FunctionComponent<IQuestionProps> = async (props) => {
       shadow-none hover:shadow-lg dark:shadow-gray-950
     '>
       <span className='font-bold col-span-4'>{props.qid}. {props.title}</span>
-      <span>{props.difficulty}</span>
+      <div className='flex items-start col-span-3'>
+        <span className={`
+          col-span-2
+          ${DIFFICULTY_COLORS[(difficulty?.id || 1) - 1]}
+          px-3 rounded-full
+          font-bold
+        `}>
+          {difficulty?.value}
+        </span>
+      </div>
       <div className='flex items-start col-span-3'>
         <span className={`
           ${PILL_COLORS[type?.id || 0]}

@@ -1,0 +1,1 @@
+export default interface ISearch { [key: string]: string | string[] | undefined }

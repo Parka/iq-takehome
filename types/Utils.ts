@@ -1,0 +1,1 @@
+export type NonNullEntry<T, K> = [Exclude<keyof T, K>, NonNullable<T[keyof T]>]
