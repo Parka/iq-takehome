@@ -53,6 +53,7 @@ interface IParams {
 }
 
 export async function GET(req: NextRequest, { params }: IParams) {
+  await new Promise(resolve => setTimeout(resolve, Number(process.env.NEXT_PUBLIC_FAKE_DELAY || 0)))
   const searchParams = req.nextUrl.searchParams
   const { slug } = await params
   const [entity, id] = slug
