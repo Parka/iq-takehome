@@ -13,7 +13,7 @@ const QuestionList: React.FunctionComponent<IQuestionsProps> = async ({ search }
   const questions: IQuestion[] = await data.json()
 
   return (
-    <section>
+    <section className='w-full'>
       <Sort search={search} />
       {questions.length ?
         <ul>
