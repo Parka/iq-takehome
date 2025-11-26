@@ -62,7 +62,7 @@ export async function GET(req: NextRequest, { params }: IParams) {
 
     if (id !== null && id !== undefined)
       return Response.json(response.find((question: IQuestion) => question.qid === Number(id)))
-
+    const search = searchParams.get('search') || ""
     const sort = searchParams.get('sort')
     response = response.filter(entry =>
       !searchParams.getAll('difficulty').length ||
@@ -73,6 +73,8 @@ export async function GET(req: NextRequest, { params }: IParams) {
     ).filter(entry =>
       !searchParams.getAll('company').length ||
       searchParams.getAll('company').includes(entry.company_asked)
+    ).filter((entry: IQuestion) =>
+      `${entry.title} ${entry.question_summary}`.toLowerCase().indexOf(search.toLowerCase()) >= 0
     )
     if (sort) response = response.sort(SORTERS[sort])
   }
