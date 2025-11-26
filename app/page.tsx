@@ -16,8 +16,10 @@ export default async function Home({
       bg-zinc-50 font-sans dark:bg-gray-950
     `}>
       <main className={`
-        flex min-h-screen w-full max-w-5xl flex-col items-center space-y-6
-        py-32 px-16 bg-white dark:bg-gray-900 sm:items-start
+        flex min-h-screen w-full max-w-5xl flex-col items-center
+        bg-white dark:bg-gray-900
+        py-8 px-4
+        sm:py-32 sm:px-16 sm:items-start 
       `}>
         <Filters search={search} />
         <QuestionList search={search} />
