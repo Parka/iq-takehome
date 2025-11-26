@@ -48,16 +48,21 @@ const SORTERS: Record<string, (a: IQuestion, b: IQuestion) => number> = {
 
 interface IParams {
   params: Promise<{
-    entity: string
+    slug: string[],
   }>
 }
 
 export async function GET(req: NextRequest, { params }: IParams) {
   const searchParams = req.nextUrl.searchParams
-  const { entity } = await params
+  const { slug } = await params
+  const [entity, id] = slug
   let response = RESPONSES[entity]
 
   if (entity === 'questions') {
+
+    if (id !== null && id !== undefined)
+      return Response.json(response.find((question: IQuestion) => question.qid === Number(id)))
+
     const sort = searchParams.get('sort')
     response = response.filter(entry =>
       !searchParams.getAll('difficulty').length ||
