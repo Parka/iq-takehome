@@ -4,6 +4,7 @@ import IDifficulty from '@/types/Difficulty';
 import IQuestion from '@/types/Question';
 import IType from '@/types/Type';
 import * as React from 'react';
+import QuestionItemClient from './QuestionItemClient';
 
 interface IQuestionProps extends IQuestion {
 }
@@ -18,18 +19,7 @@ const QuestionItem: React.FunctionComponent<IQuestionProps> = async (props) => {
   const difficulty = difficulties.find(difficulty => difficulty.id === props.difficulty)
 
   return (
-    <li className='
-      grid grid-flow-row grid-cols-1
-      sm:grid-cols-2 sm:grid-rows-4
-      md:grid-cols-18 md:grid-rows-1
-      even:bg-gray-100 odd:bg-gray-200
-      dark:even:bg-gray-700 dark:odd:bg-gray-800
-      hover:bg-blue-200 hover:dark:bg-blue-950
-      space-x-5 p-5 my-2 rounded-lg
-      transition delay-100
-      scale-100 hover:scale-105
-      shadow-none hover:shadow-lg dark:shadow-gray-950
-    '>
+    <QuestionItemClient id={props.qid}>
       <span className='font-bold md:col-span-4'>{props.qid}. {props.title}</span>
       <div className='
         flex items-start space-x-3
@@ -84,7 +74,7 @@ const QuestionItem: React.FunctionComponent<IQuestionProps> = async (props) => {
       >
         {props.company_asked}
       </a>
-    </li>
+    </QuestionItemClient>
   );
 };
 

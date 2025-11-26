@@ -16,7 +16,6 @@ const Sort: React.FunctionComponent<ISortProps> = ({ search }) => {
     isOpen,
     selectedItem,
     getToggleButtonProps,
-    getLabelProps,
     getMenuProps,
     highlightedIndex,
     getItemProps,
