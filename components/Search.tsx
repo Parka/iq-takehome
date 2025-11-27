@@ -4,9 +4,10 @@ import { useId, useTransition } from 'react';
 import { Input } from './ui/input';
 
 interface ISearchProps {
+  className?: string
 }
 
-const Search: React.FunctionComponent<ISearchProps> = (props) => {
+const Search: React.FunctionComponent<ISearchProps> = ({ className }) => {
   const id = useId()
   const [_isLoading, startTransition] = useTransition()
   const [search, setSearch] = useQueryState('search',
@@ -22,17 +23,15 @@ const Search: React.FunctionComponent<ISearchProps> = (props) => {
   )
 
   return (
-    <section className='flex flex-col space-x-2 pb-4'>
-      <Input
-        placeholder='Search'
-        value={search}
-        type="text"
-        name="search field"
-        id={`search-${id}`}
-        className='border-2'
-        onChange={e => setSearch(e.target.value)}
-      />
-    </section>
+    <Input
+      placeholder='Search'
+      value={search}
+      type="text"
+      name="search field"
+      id={`search-${id}`}
+      className={`flex flex-col space-x-2 ${className}`}
+      onChange={e => setSearch(e.target.value)}
+    />
   );
 };
 

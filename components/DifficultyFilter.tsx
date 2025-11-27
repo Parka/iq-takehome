@@ -1,17 +1,18 @@
 'use client'
 
-import { DIFFICULTY_COLORS } from '@/const/global';
 import IDifficulty from '@/types/Difficulty';
 import { parseAsInteger, useQueryState } from 'nuqs';
 import * as React from 'react';
 import { useTransition } from 'react';
-import { Badge } from './ui/badge';
+import { Toggle } from './ui/toggle';
+import { ToggleGroup, ToggleGroupItem } from './ui/toggle-group';
 
 interface IDifficultyFilterProps {
   difficulties: IDifficulty[]
+  className?: string
 }
 
-const DifficultyFilter: React.FunctionComponent<IDifficultyFilterProps> = ({ difficulties }) => {
+const DifficultyFilter: React.FunctionComponent<IDifficultyFilterProps> = ({ difficulties, className }) => {
   const [_isLoading, startTransition] = useTransition()
   const [difficultyQuery, setDifficultyQuery] = useQueryState('difficulty',
     parseAsInteger.withDefault(0).withOptions({
@@ -21,31 +22,33 @@ const DifficultyFilter: React.FunctionComponent<IDifficultyFilterProps> = ({ dif
   )
 
   return (
-    <ul className='flex flex-wrap space-x-3 space-y-2'>
+    <ToggleGroup
+      type='single'
+      variant="outline"
+      value={difficultyQuery.toString()}
+      className={className}
+    >
       {
         difficulties.map(difficulty =>
-          <li key={difficulty.id}>
-            <Badge
-              onClick={() => setDifficultyQuery(
-                difficultyQuery === difficulty.id ?
-                  null
-                  :
-                  difficulty.id
-              )
-              }
-              className={`
-                ${DIFFICULTY_COLORS[(difficulty?.id || 1) - 1]}
-                outline-blue-700 dark:outline-blue-200
-                ${difficultyQuery === difficulty.id ? 'outline-2' : 'outline-0'}
-                px-3 rounded-full text-nowrap
-              `}
-            >
-              {difficulty.value}
-            </Badge>
-          </li>
+          <ToggleGroupItem
+            key={difficulty.id}
+            value={difficulty.id.toString()}
+            onClick={() => setDifficultyQuery(
+              difficultyQuery === difficulty.id ?
+                null
+                :
+                difficulty.id
+            )}
+            className={`
+              outline-blue-700 dark:outline-blue-200
+              ${difficultyQuery === difficulty.id ? 'outline-2' : 'outline-0'}
+              px-3 rounded-full text-nowrap
+            `}          >
+            {difficulty.value}
+          </ToggleGroupItem>
         )
       }
-    </ul>
+    </ToggleGroup>
   );
 };
 

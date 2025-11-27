@@ -1,7 +1,9 @@
 'use client'
 
+import { ArrowBigLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import * as React from 'react';
+import { Button } from './ui/button';
 
 interface IBackButtonProps {
 }
@@ -9,11 +11,14 @@ interface IBackButtonProps {
 const BackButton: React.FunctionComponent<IBackButtonProps> = (props) => {
   const router = useRouter()
   return (
-    <button className='flex bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 h-8 w-8 rounded-4xl justify-center items-center' onClick={() => router.back()}>
-      <i
-        className='cursor-pointer fa-solid fa-arrow-left text-amber-400'
-      />
-    </button>
+    <Button
+      onClick={() => router.back()}
+      variant="outline"
+      size="icon"
+      aria-label="Submit"
+    >
+      <ArrowBigLeft />
+    </Button>
   );
 };
 

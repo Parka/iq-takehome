@@ -1,6 +1,7 @@
 'use client'
 import { useRouter } from 'next/navigation';
 import * as React from 'react';
+import { Item } from './ui/item';
 
 interface IQuestionItemClientProps {
   id: number
@@ -11,11 +12,11 @@ const QuestionItemClient: React.FunctionComponent<IQuestionItemClientProps> = ({
   const router = useRouter()
 
   return (
-    <li className='
+    <Item className='
       cursor-pointer
       grid grid-flow-row grid-cols-1
-      sm:grid-cols-2 sm:grid-rows-4
-      md:grid-cols-18 md:grid-rows-1
+      sm:grid-cols-2 sm:grid-rows-3
+      md:grid-cols-14 md:grid-rows-1
       even:bg-gray-100 odd:bg-gray-200
       dark:even:bg-gray-700 dark:odd:bg-gray-800
       hover:bg-blue-200 hover:dark:bg-blue-950
@@ -29,7 +30,7 @@ const QuestionItemClient: React.FunctionComponent<IQuestionItemClientProps> = ({
       }}
     >
       {children}
-    </li>
+    </Item>
   );
 };
 

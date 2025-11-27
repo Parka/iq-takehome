@@ -1,5 +1,6 @@
 import BackButton from '@/components/BackButton';
-import { DIFFICULTY_COLORS, PILL_COLORS } from '@/const/global';
+import { Badge } from '@/components/ui/badge';
+import { Item } from '@/components/ui/item';
 import IDifficulty from '@/types/Difficulty';
 import IQuestion from '@/types/Question';
 import IType from '@/types/Type';
@@ -34,40 +35,32 @@ const Page: React.FunctionComponent<IPageProps> = async ({ params }) => {
         sm:py-32 sm:px-16 sm:items-start
         `}>
         <BackButton />
-        <div className='
+        <Item className='
           w-full grid grid-flow-row grid-cols-1
           sm:grid-cols-2 sm:grid-rows-4 sm:space-y-4
           bg-gray-200 
           dark:bg-gray-700 
           space-x-5 p-5 my-2 rounded-lg
           shadow-lg dark:shadow-gray-950
-      '>
+        '>
           <span className='font-bold'>{question.qid}. {question.title}</span>
           <div className='
             flex items-start space-x-3
             sm:col-start-2
           '>
             <span>Difficulty:</span>
-            <span className={`
-              col-span-2
-              ${DIFFICULTY_COLORS[(difficulty?.id || 1) - 1]}
-              px-3 rounded-full
-              font-bold
-            `}>
+            <Badge className={`col-span-2 px-3 font-bold`}>
               {difficulty?.value}
-            </span>
+            </Badge>
           </div>
           <div className='
             flex items-start space-x-3
             sm:col-start-2
           '>
             <span>Type:</span>
-            <span className={`
-              ${PILL_COLORS[type?.id || 0]}
-              px-3 rounded-full text-center wrap-anywhere
-            `}>
+            <Badge className={`px-3`}>
               {question.type}
-            </span>
+            </Badge>
           </div>
           <div className='
             flex items-start space-x-3
@@ -93,7 +86,7 @@ const Page: React.FunctionComponent<IPageProps> = async ({ params }) => {
           >
             {question.company_asked}
           </a>
-        </div>
+        </Item>
       </main>
     </div>
   );

@@ -1,11 +1,11 @@
 'use client'
 
-import { PILL_COLORS } from '@/const/global';
 import IType from '@/types/Type';
 import { useQueryState } from 'nuqs';
 import * as React from 'react';
 import { useTransition } from 'react';
 import { Badge } from './ui/badge';
+import { ToggleGroup, ToggleGroupItem } from './ui/toggle-group';
 
 interface ITypeFilterProps {
   types: IType[]
@@ -22,30 +22,31 @@ const TypeFilter: React.FunctionComponent<ITypeFilterProps> = ({ types }) => {
   )
 
   return (
-    <ul className='flex flex-wrap space-x-3 space-y-2'>
+    <ToggleGroup
+      type='single'
+      variant='outline'
+      spacing={1}
+      size={'sm'}
+      className='flex flex-wrap'
+      value={typeQuery}
+    >
       {
         types.map(type =>
-          <li key={type.id}>
-            <Badge
-              onClick={() => setTypeQuery(
-                typeQuery === type.value ?
-                  null
-                  :
-                  type.value
-              )}
-              className={`
-                ${PILL_COLORS[type?.id || 0]}
-                outline-blue-700 dark:outline-blue-200
-                ${typeQuery === type.value ? 'outline-2' : 'outline-0'}
-                px-3 rounded-full text-nowrap
-              `}
-            >
-              {type.value}
-            </Badge>
-          </li>
+          <ToggleGroupItem
+            key={type.id}
+            value={type.value}
+            onClick={() => setTypeQuery(
+              typeQuery === type.value ?
+                null
+                :
+                type.value
+            )}
+          >
+            {type.value}
+          </ToggleGroupItem>
         )
       }
-    </ul>
+    </ToggleGroup>
   );
 };
 
