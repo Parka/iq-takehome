@@ -37,7 +37,7 @@ const Page: React.FunctionComponent<IPageProps> = async ({ params }) => {
         <BackButton />
         <Item className='
           w-full grid grid-flow-row grid-cols-1
-          sm:grid-cols-2 sm:grid-rows-4 sm:space-y-4
+          sm:grid-cols-2 sm:grid-rows-4 sm:space-y-2
           bg-gray-200 
           dark:bg-gray-700 
           space-x-5 p-5 my-2 rounded-lg
@@ -46,7 +46,7 @@ const Page: React.FunctionComponent<IPageProps> = async ({ params }) => {
           <span className='font-bold'>{question.qid}. {question.title}</span>
           <div className='
             flex items-start space-x-3
-            sm:col-start-2
+            sm:col-start-2 sm:row-start-2
           '>
             <span>Difficulty:</span>
             <Badge className={`col-span-2 px-3 font-bold`}>
@@ -55,7 +55,7 @@ const Page: React.FunctionComponent<IPageProps> = async ({ params }) => {
           </div>
           <div className='
             flex items-start space-x-3
-            sm:col-start-2
+            sm:col-start-2 sm:row-start-3
           '>
             <span>Type:</span>
             <Badge className={`px-3`}>
@@ -64,22 +64,22 @@ const Page: React.FunctionComponent<IPageProps> = async ({ params }) => {
           </div>
           <div className='
             flex items-start space-x-3
-            sm:col-start-2
+            sm:col-start-2 sm:row-start-4
           '>
             <span>Votes:</span>
             <span>{question.sum}</span>
           </div>
-          <span className='
+          <div className='
             col-start-1 row-start-2 pb-12
-            sm:row-start-2 sm:row-span-3 sm:pb-0
+            sm:row-start-3 sm:row-span-2 sm:pb-0 sm:self-start
           '
           >
-            {question.question_summary}
-          </span>
+            <span>{question.question_summary}</span>
+          </div>
           <a className='
               wrap-anywhere text-blue-400
               visited:text-purple-400
-              sm:col-start-2
+              sm:row-start-2 sm:col-start-1
             '
             href={`https://www.linkedin.com/search/results/companies/?keywords=${question.company_asked}`}
             target='_blank'
