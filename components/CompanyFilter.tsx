@@ -28,6 +28,7 @@ const CompanyFilter: React.FunctionComponent<ICompanyFilterProps> = ({ companies
           setCompany(selected?.value || "")
         }
       }
+      placeholder='Company name'
     />
   );
 };

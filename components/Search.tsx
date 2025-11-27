@@ -1,6 +1,7 @@
 'use client'
 import { useQueryState } from 'nuqs';
-import { useEffect, useId, useTransition } from 'react';
+import { useId, useTransition } from 'react';
+import { Input } from './ui/input';
 
 interface ISearchProps {
 }
@@ -22,13 +23,8 @@ const Search: React.FunctionComponent<ISearchProps> = (props) => {
 
   return (
     <section className='flex flex-col space-x-2 pb-4'>
-      <label
-        htmlFor={`search-${id}`}
-        className='font-bold text-lg'
-      >
-        Search
-      </label>
-      <input
+      <Input
+        placeholder='Search'
         value={search}
         type="text"
         name="search field"

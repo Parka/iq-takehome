@@ -3,17 +3,23 @@
 import * as React from 'react';
 import Downshift from 'downshift';
 import fuzzaldrin from 'fuzzaldrin-plus';
+import { Input } from './ui/input';
 
 interface IAutoCompleteProps {
   items: { value: string }[]
   initialSelectedItem?: any
   onChange?: (selected: any) => void
+  placeholder?: string
 }
 
-const AutoComplete: React.FunctionComponent<IAutoCompleteProps> = ({ items, onChange, initialSelectedItem }) => {
+const AutoComplete: React.FunctionComponent<IAutoCompleteProps> = ({ items, onChange, initialSelectedItem, placeholder }) => {
   const fuzzyFilter = (input: string | null) => fuzzaldrin.filter(items, input || "", { key: "value" })
   return (
-    <Downshift initialSelectedItem={initialSelectedItem} itemToString={item => item?.value} onChange={selected => onChange?.(selected)}>
+    <Downshift
+      initialSelectedItem={initialSelectedItem}
+      itemToString={item => item?.value}
+      onChange={selected => onChange?.(selected)}
+    >
       {({
         getInputProps,
         getItemProps,
@@ -30,7 +36,7 @@ const AutoComplete: React.FunctionComponent<IAutoCompleteProps> = ({ items, onCh
             className='inline-block border-2'
             {...getRootProps({}, { suppressRefError: true })}
           >
-            <input {...getInputProps()} />
+            <Input {...getInputProps()} placeholder={placeholder} />
           </div>
           <ul
             className='absolute z-10 top-full'
