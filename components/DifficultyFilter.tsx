@@ -5,6 +5,7 @@ import IDifficulty from '@/types/Difficulty';
 import { parseAsInteger, useQueryState } from 'nuqs';
 import * as React from 'react';
 import { useTransition } from 'react';
+import { Badge } from './ui/badge';
 
 interface IDifficultyFilterProps {
   difficulties: IDifficulty[]
@@ -24,7 +25,7 @@ const DifficultyFilter: React.FunctionComponent<IDifficultyFilterProps> = ({ dif
       {
         difficulties.map(difficulty =>
           <li key={difficulty.id}>
-            <button
+            <Badge
               onClick={() => setDifficultyQuery(
                 difficultyQuery === difficulty.id ?
                   null
@@ -40,7 +41,7 @@ const DifficultyFilter: React.FunctionComponent<IDifficultyFilterProps> = ({ dif
               `}
             >
               {difficulty.value}
-            </button>
+            </Badge>
           </li>
         )
       }

@@ -5,6 +5,7 @@ import IType from '@/types/Type';
 import { useQueryState } from 'nuqs';
 import * as React from 'react';
 import { useTransition } from 'react';
+import { Badge } from './ui/badge';
 
 interface ITypeFilterProps {
   types: IType[]
@@ -25,7 +26,7 @@ const TypeFilter: React.FunctionComponent<ITypeFilterProps> = ({ types }) => {
       {
         types.map(type =>
           <li key={type.id}>
-            <button
+            <Badge
               onClick={() => setTypeQuery(
                 typeQuery === type.value ?
                   null
@@ -40,7 +41,7 @@ const TypeFilter: React.FunctionComponent<ITypeFilterProps> = ({ types }) => {
               `}
             >
               {type.value}
-            </button>
+            </Badge>
           </li>
         )
       }

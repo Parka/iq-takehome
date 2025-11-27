@@ -5,6 +5,7 @@ import IQuestion from '@/types/Question';
 import IType from '@/types/Type';
 import * as React from 'react';
 import QuestionItemClient from './QuestionItemClient';
+import { Badge } from './ui/badge';
 
 interface IQuestionProps extends IQuestion {
 }
@@ -27,26 +28,25 @@ const QuestionItem: React.FunctionComponent<IQuestionProps> = async (props) => {
         md:col-span-3 md:col-start-auto
       '>
         <span className='md:hidden'>Difficulty:</span>
-        <span className={`
+        <Badge className={`
           col-span-2
           ${DIFFICULTY_COLORS[(difficulty?.id || 1) - 1]}
-          px-3 rounded-full
-          font-bold
+          px-3 font-bold
         `}>
           {difficulty?.value}
-        </span>
+        </Badge>
       </div>
       <div className='
         flex items-start space-x-3
         sm:col-start-2 md:col-span-3 md:col-start-auto
       '>
         <span className='md:hidden'>Type:</span>
-        <span className={`
+        <Badge className={`
           ${PILL_COLORS[type?.id || 0]}
-          px-3 rounded-full text-center wrap-anywhere
+          px-3 text-center
         `}>
           {props.type}
-        </span>
+        </Badge>
       </div>
       <div className='
         flex items-start space-x-3
