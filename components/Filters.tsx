@@ -1,18 +1,14 @@
-import { DIFFICULTY_COLORS, PILL_COLORS } from '@/const/global';
 import IType from '@/types/Type';
-import { toToggleURLSearchParams } from '@/utils/searchParams';
-import Link from 'next/link';
 import * as React from 'react';
-import AutoComplete from './AutoComplete';
 import IDifficulty from '@/types/Difficulty';
 import ICompany from '@/types/Company';
 import CompanyFilter from './CompanyFilter';
+import TypeFilter from './TypeFilter';
+import DifficultyFilter from './DifficultyFilter';
 
-interface IFiltersProps {
-  search?: URLSearchParams
-}
+interface IFiltersProps { }
 
-const Filters: React.FunctionComponent<IFiltersProps> = async ({ search }) => {
+const Filters: React.FunctionComponent<IFiltersProps> = async (props) => {
   const [
     difficultyResponse,
     typesResponse,
@@ -31,47 +27,17 @@ const Filters: React.FunctionComponent<IFiltersProps> = async ({ search }) => {
     <section className='flex flex-col space-y-2'>
       <div>
         <h2 className='font-bold text-lg'>Filter by difficulty</h2>
-        <ul className='flex flex-wrap space-x-3 space-y-2'>
-          {
-            difficulties.map(difficulty =>
-              <li key={difficulty.id}>
-                <Link className={`
-                  ${DIFFICULTY_COLORS[(difficulty?.id || 1) - 1]}
-                  outline-blue-700 dark:outline-blue-200
-                  ${search?.getAll("difficulty").includes(difficulty.id.toString()) ? 'outline-2' : 'outline-0'}
-                  px-3 rounded-full text-nowrap
-                `} href={`./?${toToggleURLSearchParams(search, 'difficulty', difficulty.id.toString())}`}>
-                  {difficulty.value}
-                </Link>
-              </li>
-            )
-          }
-        </ul>
+        <DifficultyFilter difficulties={difficulties} />
       </div>
       <div>
         <h2 className='font-bold text-lg'>Filter by type</h2>
-        <ul className='flex flex-wrap space-x-3 space-y-2'>
-          {
-            types.map(type =>
-              <li key={type.id}>
-                <Link className={`
-                  ${PILL_COLORS[type?.id || 0]}
-                  outline-blue-700 dark:outline-blue-200
-                  ${search?.getAll("type").includes(type.value) ? 'outline-2' : 'outline-0'}
-                  px-3 rounded-full text-nowrap
-                `} href={`./?${toToggleURLSearchParams(search, 'type', type.value)}`}>
-                  {type.value}
-                </Link>
-              </li>
-            )
-          }
-        </ul>
+        <TypeFilter types={types} />
       </div>
       <div>
         <h2 className='font-bold text-lg'>Filter by company</h2>
-        <ul className='flex flex-wrap space-x-3 space-y-2'>
+        <div className='flex flex-wrap space-x-3 space-y-2'>
           <CompanyFilter companies={companies} />
-        </ul>
+        </div>
       </div>
     </section>
   );

@@ -6,13 +6,14 @@ import fuzzaldrin from 'fuzzaldrin-plus';
 
 interface IAutoCompleteProps {
   items: { value: string }[]
+  initialSelectedItem?: any
   onChange?: (selected: any) => void
 }
 
-const AutoComplete: React.FunctionComponent<IAutoCompleteProps> = ({ items, onChange }) => {
+const AutoComplete: React.FunctionComponent<IAutoCompleteProps> = ({ items, onChange, initialSelectedItem }) => {
   const fuzzyFilter = (input: string | null) => fuzzaldrin.filter(items, input || "", { key: "value" })
   return (
-    <Downshift itemToString={item => item?.value} onChange={selected => onChange?.(selected)}>
+    <Downshift initialSelectedItem={initialSelectedItem} itemToString={item => item?.value} onChange={selected => onChange?.(selected)}>
       {({
         getInputProps,
         getItemProps,

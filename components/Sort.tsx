@@ -1,34 +1,34 @@
 'use client'
 
 import { useSelect } from 'downshift';
-import { useRouter } from 'next/navigation';
+import { useQueryState } from 'nuqs';
 import * as React from 'react';
+import { useTransition } from 'react';
 
-interface ISortProps {
-  search: URLSearchParams
-}
+interface ISortProps { }
 
 const CRITERIAS = ['difficulty', 'type', 'company'];
 
-const Sort: React.FunctionComponent<ISortProps> = ({ search }) => {
-  const router = useRouter()
+const Sort: React.FunctionComponent<ISortProps> = (props) => {
+  const [_isLoading, startTransition] = useTransition()
+  const [sort, setSort] = useQueryState('sort',
+    {
+      defaultValue: '',
+      startTransition,
+      shallow: false,
+    }
+  )
   const {
     isOpen,
     selectedItem,
     getToggleButtonProps,
     getMenuProps,
-    highlightedIndex,
     getItemProps,
     reset,
   } = useSelect({
     items: CRITERIAS,
-    onSelectedItemChange: ({ selectedItem }) => {
-      const newSearchParams = new URLSearchParams(search)
-      if (selectedItem)
-        newSearchParams.set('sort', selectedItem)
-      else newSearchParams.delete('sort')
-      router.push(`./?${newSearchParams}`)
-    }
+    onSelectedItemChange: ({ selectedItem }) => { setSort(selectedItem) },
+    initialSelectedItem: sort
   })
 
   return (

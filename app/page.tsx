@@ -1,14 +1,17 @@
 import Filters from "@/components/Filters";
 import QuestionList from "@/components/QuestionList";
+import Search from "@/components/Search";
 import ISearch from "@/types/Search";
-import { searchParamsNextToNative } from "@/utils/searchParams";
+import { Suspense } from "react";
+import { loadSearchParams, serialize } from "./searchParams";
 
 export default async function Home({
   searchParams,
 }: {
   searchParams: Promise<ISearch>
 }) {
-  const search = searchParamsNextToNative(await searchParams)
+  const search = await loadSearchParams(searchParams)
+  const queryString = serialize(search)
 
   return (
     <div className={`
@@ -21,8 +24,11 @@ export default async function Home({
         py-8 px-4
         sm:py-32 sm:px-16 sm:items-start 
       `}>
-        <Filters search={search} />
-        <QuestionList search={search} />
+        <Search />
+        <Filters />
+        <Suspense fallback={<div>Loading...</div>}>
+          <QuestionList search={queryString} />
+        </Suspense>
       </main>
     </div>
   );

@@ -3,27 +3,29 @@
 import * as React from 'react';
 import AutoComplete from './AutoComplete';
 import ICompany from '@/types/Company';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useQueryState } from 'nuqs';
 
 interface ICompanyFilterProps {
   companies: ICompany[]
 }
 
 const CompanyFilter: React.FunctionComponent<ICompanyFilterProps> = ({ companies }) => {
-  const searchParams = useSearchParams()
-  const router = useRouter()
+  const [_isLoading, startTransition] = React.useTransition()
+  const [company, setCompany] = useQueryState('company',
+    {
+      defaultValue: '',
+      startTransition,
+      shallow: false,
+    }
+  )
 
   return (
     <AutoComplete
       items={companies}
+      initialSelectedItem={companies.find(c => c.value === company)}
       onChange={
         selected => {
-          const newSearchParams = new URLSearchParams(searchParams.toString())
-          if (selected?.value)
-            newSearchParams.set('company', selected.value)
-          else
-            newSearchParams.delete('company')
-          router.push(`./?${newSearchParams}`)
+          setCompany(selected?.value || "")
         }
       }
     />

@@ -4,7 +4,7 @@ import IQuestion from '@/types/Question';
 import Sort from './Sort';
 
 interface IQuestionsProps {
-  search: URLSearchParams
+  search: string
 }
 
 const QuestionList: React.FunctionComponent<IQuestionsProps> = async ({ search }) => {
@@ -14,7 +14,7 @@ const QuestionList: React.FunctionComponent<IQuestionsProps> = async ({ search }
 
   return (
     <section className='w-full'>
-      <Sort search={search} />
+      <Sort />
       {questions.length ?
         <ul>
           <li className='
